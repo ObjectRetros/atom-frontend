@@ -1,23 +1,30 @@
-// https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
-  devtools: { enabled: true },
-  app: {
-    pageTransition: { name: 'page', mode: 'out-in' },
-    head: {
-      htmlAttrs: {
-        lang: 'en',
-        class: 'h-full bg-gray-900',
-      },
-      bodyAttrs: {
-        class: 'h-full',
-      },
+    modules: ["@vueuse/nuxt", "@nuxtjs/tailwindcss", "@formkit/nuxt"],
+    css: ['~/assets/css/main.css'],
+    app: {
+        pageTransition: {name: 'page', mode: 'out-in'},
+        head: {
+            htmlAttrs: {
+                lang: 'en',
+                class: 'h-full',
+            },
+            bodyAttrs: {
+                class: 'h-full',
+            },
+        },
     },
-  },
-  css: ['~/assets/css/main.css'],
-  postcss: {
-    plugins: {
-      tailwindcss: {},
-      autoprefixer: {},
+    tailwindcss: {
+        config: {
+            content: ["./node_modules/laravel-vue-pagination/**/*.vue"],
+        },
     },
-  },
-})
+    runtimeConfig: {
+        public: {
+            appURL: "http://localhost",
+        },
+    },
+    routeRules: {
+        "/profiles/*": { swr: true },
+        "/*": { ssr: false },
+    },
+});
